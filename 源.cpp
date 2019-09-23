@@ -19,45 +19,18 @@
 
 
 
-using namespace std;
+using namespace std;    
 
-//    MAXGENS is the maximum number of generations.
+# define POPSIZE 50//ç§ç¾¤å†…ä¸ªä½“æ•°é‡
 
-//    NVARS is the number of problem variables.
+# define MAXGENS 1000//æœ€å¤§çš„è¿­ä»£æ¬¡æ•°
 
-//    PMUTATION is the probability of mutation.
+# define NVARS 3//å˜é‡ä¸ªæ•°ï¼Œå³ç”¨ä»¥è¡¨ç¤ºåŸºå› å‹çš„bitæ•°
 
-//    POPSIZE is the population size. 
+# define PXOVER 0.8//äº¤æ¢ç‡
 
-//    PXOVER is the probability of crossover.     
+# define PMUTATION 0.15//çªå˜ç‡
 
-# define POPSIZE 50//ÖÖÈºÄÚ¸öÌåÊıÁ¿
-
-# define MAXGENS 1000//×î´óµÄµü´ú´ÎÊı
-
-# define NVARS 3//±äÁ¿¸öÊı£¬¼´ÓÃÒÔ±íÊ¾»ùÒòĞÍµÄbitÊı
-
-# define PXOVER 0.8//½»»»ÂÊ
-
-# define PMUTATION 0.15//Í»±äÂÊ
-
-//
-
-//  Each GENOTYPE is a member of the population, with
-
-//  gene: a string of variables,
-
-//  fitness: the fitness
-
-//  upper: the variable upper bounds,
-
-//  lower: the variable lower bounds,
-
-//  rfitness: the relative fitness,
-
-//  cfitness: the cumulative fitness.
-
-//
 
 struct genotype
 
@@ -87,7 +60,7 @@ struct genotype newpopulation[POPSIZE + 1];
 
 int main();
 
-void crossover(int& seed);//½»²æ²Ù×÷¡£selects two parents for the single point crossover
+void crossover(int& seed);//äº¤å‰æ“ä½œã€‚selects two parents for the single point crossover
 
 void elitist();//stores the best member of the previous generation
 
@@ -125,27 +98,6 @@ void Xover(int one, int two, int& seed);//performs crossover of the two selected
 
 int main()
 
-//  Discussion:
-
-//
-
-//    Each generation involves selecting the best 
-
-//    members, performing crossover & mutation and then 
-
-//    evaluating the resulting population, until the terminating 
-
-//    condition is satisfied   
-
-//
-
-//    This is a simple genetic algorithm implementation where the 
-
-//    evaluation function takes positive values only and the 
-
-//    fitness of an individual is the same as the value of the 
-
-//    objective function.  
 
 {
 
@@ -270,25 +222,6 @@ int main()
 
 
 void crossover(int& seed)
-
-//    CROSSOVER selects two parents for the single point crossover.
-
-//  Local parameters:
-
-//
-
-//    Local, int FIRST, is a count of the number of members chosen.
-
-//
-
-//  Parameters:
-
-//
-
-//    Input/output, int &SEED, a seed for the random number generator.
-
-//
-
 {
 
 	const double a = 0.0;
@@ -352,37 +285,6 @@ void crossover(int& seed)
 
 
 void elitist()
-
-//    ELITIST stores the best member of the previous generation.
-
-//
-
-//  Discussion:
-
-//
-
-//    The best member of the previous generation is stored as 
-
-//    the last in the array. If the best member of the current 
-
-//    generation is worse then the best member of the previous 
-
-//    generation, the latter one would replace the worst member 
-
-//    of the current population.
-
-//  Local parameters:
-
-//
-
-//    Local, double BEST, the best fitness value.
-
-//
-
-//    Local, double WORST, the worst fitness value.
-
-//
-
 {
 
 	int i;
@@ -475,20 +377,6 @@ void elitist()
 
 	}
 
-	// 
-
-	//  If the best individual from the new population is better than 
-
-	//  the best individual from the previous population, then 
-
-	//  copy the best from the new population; else replace the 
-
-	//  worst individual from the current population with the 
-
-	//  best one from the previous generation                     
-
-	//
-
 	if (population[POPSIZE].fitness <= best)
 
 	{
@@ -531,14 +419,6 @@ void elitist()
 
 void evaluate()
 
-//    EVALUATE implements the user-defined valuation function
-
-//  Discussion:
-
-//
-
-//    Each time this is changed, the code has to be recompiled.
-
 //    The current function is:  x[1]^2-x[1]*x[2]+x[3]
 
 {
@@ -574,36 +454,6 @@ void evaluate()
 
 
 int i4_uniform_ab(int a, int b, int& seed)
-
-//    I4_UNIFORM_AB returns a scaled pseudorandom I4 between A and B.
-
-//
-
-//  Discussion:
-
-//
-
-//    The pseudorandom number should be uniformly distributed
-
-//    between A and B.
-
-//  Parameters:
-
-//
-
-//    Input, int A, B, the limits of the interval.
-
-//
-
-//    Input/output, int &SEED, the "seed" value, which should NOT be 0.
-
-//    On output, SEED has been updated.
-
-//
-
-//    Output, int I4_UNIFORM, a number between A and B.
-
-//
 
 {
 
@@ -689,7 +539,7 @@ int i4_uniform_ab(int a, int b, int& seed)
 
 	//Returns the integral value that is nearest to x
 
-	value = round(r);//Vs2008ÖĞ²¢Ã»ÓĞ´Ëº¯Êı£¬ĞèÒª×Ô¼ºÊµÏÖ¡£ÊÇ×î½üÈ¡Õû
+	value = round(r);//Vs2008ä¸­å¹¶æ²¡æœ‰æ­¤å‡½æ•°ï¼Œéœ€è¦è‡ªå·±å®ç°ã€‚æ˜¯æœ€è¿‘å–æ•´
 
 	//
 
@@ -739,39 +589,6 @@ int Int_uniform_ab(int a, int b)
 
 
 void initialize(string filename, int& seed)
-
-//    INITIALIZE initializes the genes within the variables bounds. 
-
-//
-
-//  Discussion:
-
-//
-
-//    It also initializes (to zero) all fitness values for each
-
-//    member of the population. It reads upper and lower bounds 
-
-//    of each variable from the input file `gadata.txt'. It 
-
-//    randomly generates values between these bounds for each 
-
-//    gene of each genotype in the population. The format of 
-
-//    the input file `gadata.txt' is 
-
-//      var1_lower_bound var1_upper bound
-
-//      var2_lower_bound var2_upper bound ...
-
-
-
-//  Parameters:
-
-//    Input, string FILENAME, the name of the input file.
-
-//    Input/output, int &SEED, a seed for the random number generator.
-
 {
 
 	int i;
@@ -853,29 +670,6 @@ void initialize(string filename, int& seed)
 
 
 void keep_the_best()
-
-//    KEEP_THE_BEST keeps track of the best member of the population. 
-
-//
-
-//  Discussion:
-
-//
-
-//    Note that the last entry in the array Population holds a 
-
-//    copy of the best individual.
-
-//
-
-//  Local parameters:
-
-//
-
-//    Local, int CUR_BEST, the index of the best individual.
-
-//
-
 {
 
 	int cur_best;
@@ -931,29 +725,6 @@ void keep_the_best()
 
 
 void mutate(int& seed)
-
-//
-
-//    MUTATE performs a random uniform mutation. 
-
-//
-
-//  Discussion:
-
-//
-
-//    A variable selected for mutation is replaced by a random value 
-
-//    between the lower and upper bounds of this variable.
-
-//  Parameters:
-
-//
-
-//    Input/output, int &SEED, a seed for the random number generator.
-
-//
-
 {
 
 	const double a = 0.0;
@@ -1013,39 +784,6 @@ void mutate(int& seed)
 
 
 double r8_uniform_ab(double a, double b, int& seed)
-
-//    R8_UNIFORM_AB returns a scaled pseudorandom R8.
-
-//
-
-//  Discussion:
-
-//
-
-//    The pseudorandom number should be uniformly distributed
-
-//    between A and B.
-
-//
-
-//  Parameters:
-
-//
-
-//    Input, double A, B, the limits of the interval.
-
-//
-
-//    Input/output, int &SEED, the "seed" value, which should NOT be 0.
-
-//    On output, SEED has been updated.
-
-//
-
-//    Output, double R8_UNIFORM_AB, a number strictly between A and B.
-
-//
-
 {
 
 	int i4_huge = 2147483647;
@@ -1110,7 +848,7 @@ double Dou_uniform_ab(double a, double b)
 
 	double tmp;
 
-	//rand() / double(RAND_MAX)¿ÉÒÔÉú³É0~1Ö®¼äµÄ¸¡µãÊı
+	//rand() / double(RAND_MAX)å¯ä»¥ç”Ÿæˆ0~1ä¹‹é—´çš„æµ®ç‚¹æ•°
 
 	tmp = a + static_cast<double>(rand()) / RAND_MAX * (b - a);
 
@@ -1119,39 +857,6 @@ double Dou_uniform_ab(double a, double b)
 }
 
 void report(int generation)
-
-//    REPORT reports progress of the simulation. 
-
-
-
-//  Local parameters:
-
-//
-
-//    Local, double avg, the average population fitness.
-
-//
-
-//    Local, best_val, the best population fitness.
-
-//
-
-//    Local, double square_sum, square of sum for std calc.
-
-//
-
-//    Local, double stddev, standard deviation of population fitness.
-
-//
-
-//    Local, double sum, the total population fitness.
-
-//
-
-//    Local, double sum_square, sum of squares for std calc.
-
-//
-
 {
 
 	double avg;
@@ -1231,28 +936,6 @@ void report(int generation)
 
 
 void selector(int& seed)
-
-//    SELECTOR is the selection function.
-
-//
-
-//  Discussion:
-
-//
-
-//    Standard proportional selection for maximization problems incorporating 
-
-//    the elitist model.  This makes sure that the best member always survives.
-
-
-
-//  Parameters:
-
-//
-
-//    Input/output, int &SEED, a seed for the random number generator.
-
-//
 
 {
 
@@ -1416,7 +1099,7 @@ void timestamp()
 
 	tm = localtime(&now);
 
-	//½«Ê±¼ä¸ñÊ½»¯
+	//å°†æ—¶é—´æ ¼å¼åŒ–
 
 	len = strftime(time_buffer, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm);
 
@@ -1437,29 +1120,6 @@ void timestamp()
 
 
 void Xover(int one, int two, int& seed)
-
-//    XOVER performs crossover of the two selected parents. 
-
-//  Local parameters:
-
-//
-
-//    Local, int point, the crossover point.
-
-//
-
-//  Parameters:
-
-//
-
-//    Input, int ONE, TWO, the indices of the two parents.
-
-//
-
-//    Input/output, int &SEED, a seed for the random number generator.
-
-//
-
 {
 
 	int i;
